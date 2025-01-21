@@ -1,7 +1,7 @@
 import os
 from bobo_reader import copy_db_file, clear_tmp
-from bobo_db import get_paid_bookmarks
-from reports import generate_bookmarks_output_pdf
+from bobo_db import get_official_bookmarks
+from reports import generate_report_pdf, generate_report_html
 
 
 def print_logo():
@@ -26,7 +26,8 @@ def main():
 
     set_up_env()
 
-    generate_bookmarks_output_pdf(get_paid_bookmarks(), "bookmark_reports.pdf")
+    #generate_report_pdf(get_official_bookmarks(), "bookmark_reports.pdf")
+    generate_report_html(get_official_bookmarks())
 
     clear_tmp()
 

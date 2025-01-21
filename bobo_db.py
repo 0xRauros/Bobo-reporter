@@ -10,7 +10,6 @@ bookmarks_query = """
     WHERE Bookmark.Text IS NOT NULL AND Bookmark.Text != '';
     """
 
-
 def open_connection(db_path=LOCAL_COPY_PATH):
     try:
         conn = sqlite3.connect(db_path)
@@ -20,8 +19,7 @@ def open_connection(db_path=LOCAL_COPY_PATH):
         raise
 
 
-
-def get_paid_bookmarks():
+def get_official_bookmarks():
     """The ones stored inside sqlite db"""
     with closing(open_connection()) as conn:
         try:
@@ -33,7 +31,8 @@ def get_paid_bookmarks():
             if "no such table" in str(e):
                 print(f"Error. Did you remember to press the 'Connect' option of the pop up when you plug your Kobo to the computer?")
 
-def get_off_road_bookmarks():
+
+def get_unofficial_bookmarks():
     """Other bookmarks from non-purchased books"""
     pass
 

@@ -1,14 +1,27 @@
 import subprocess
 import os
+from datetime import date
+
+from utils import query_result_to_book_list
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas
+from jinja2 import Environment, FileSystemLoader
+import webbrowser
+
+file_loader = FileSystemLoader("templates")
+env = Environment(loader=file_loader)
 
 
+def generate_report_html(query_result, output_file="tmp/report.html", theme="default"):
+    books = query_result_to_book_list(query_result)
+    template = env.get_template(f"{theme}.html")
+    output = template.render({"books": books, "date": date.today()})
+    with open(output_file, 'w') as f:
+        f.write(output)
 
-def generate_output_html(bookmarks, html_filename="bookmarks.html", theme=None):
-    pass
+    webbrowser.open('file://' + os.path.realpath(output_file))
 
 
 def split_pdf_text(text, max_length=80):
@@ -19,11 +32,11 @@ def split_pdf_text(text, max_length=80):
             split_point = max_length
         lines.append(text[:split_point])
         text = text[split_point:].lstrip() 
-    lines.append(text) 
+    lines.append(text)            
     return lines
 
 
-def generate_bookmarks_output_pdf(bookmarks, pdf_filename="bookmarks.pdf", theme=None):
+def generate_report_pdf(bookmarks, output_file="tmp/report.pdf", theme=None):
     c = canvas.Canvas(pdf_filename, pagesize=letter)
     x = 72  
     y = 750  
@@ -59,4 +72,5 @@ def generate_bookmarks_output_pdf(bookmarks, pdf_filename="bookmarks.pdf", theme
             y = 750
 
     c.save()  
-    subprocess.Popen(["xdg-open", f"{os.getcwd()}/{pdf_filename}"])
+    subprocess.Popen(["xdg-open", f"{os.getcwd()}/{output_file}"])
+
