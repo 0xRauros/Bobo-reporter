@@ -13,6 +13,7 @@
 [] Kobo unofficial annotations support
 [] Seduce Willy to remove Pandas
 [] Little external dependencies 
+[] Write license
 
 ## Requirements
 
