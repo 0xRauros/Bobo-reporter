@@ -3,6 +3,10 @@ from bobo_reader import copy_db_file, clear_tmp, wait_for_device
 from bobo_db import get_official_bookmarks
 from reports import generate_report_pdf, generate_report_html
 
+from clippings_parser import parse_clippings
+from get_windows_filepath import find_kindle_documents_path
+from kindle_reports import kindle_report
+
 
 def print_logo():
     logo = """
@@ -29,14 +33,25 @@ def set_up_env():
 def main():
     print_logo()
 
-    wait_for_device()
+    device_type = input("Please enter your eBook device (Kobo/Kindle): ").strip().lower()
 
-    set_up_env()
+    if device_type == "kobo":
+        wait_for_device()
+        set_up_env()
+        #generate_report_pdf(get_official_bookmarks(), "bookmark_reports.pdf")
+        generate_report_html(get_official_bookmarks())
+        clear_tmp()
 
-    #generate_report_pdf(get_official_bookmarks(), "bookmark_reports.pdf")
-    generate_report_html(get_official_bookmarks())
+    elif device_type == "kindle":
+        print("You have selected Kindle. Proceeding with parsing clippings.")
+        filepath=find_kindle_documents_path()
+        print(filepath)
+        df = parse_clippings(filepath)
+        kindle_report(df)
+    
+    else:
+        print("Sorry, we only support Kobo Clara and Kindle ?")
 
-    clear_tmp()
 
 if __name__ == "__main__":
     main()
