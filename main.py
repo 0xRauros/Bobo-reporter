@@ -5,6 +5,7 @@ from reports import generate_report_pdf, generate_report_html
 from clippings_parser import parse_clippings
 import platform
 from get_windows_filepath import find_kindle_documents_path
+from kindle_reports import kindle_report
 
 # Retrieve the name of the operating system
 
@@ -46,7 +47,9 @@ def main():
         print("You have selected Kindle. Proceeding with parsing clippings.")
         filepath=find_kindle_documents_path()
         print(filepath)
-        parse_clippings(filepath)
+        df = parse_clippings(filepath)
+        kindle_report(df)
+
     else:
         print("Invalid input. Please enter 'Kobo' or 'Kindle'.")
     

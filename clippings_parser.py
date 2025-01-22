@@ -37,7 +37,8 @@ def parse_clippings(file_path):
         df["Category"] = df["Metadata"].apply(extract_category)
         df["Page"] = df["Metadata"].apply(extract_page)
         df["Position"] = df["Metadata"].apply(extract_position)
-    print(df.head())
+    # df.to_csv("kindle_bookmarks.csv")
+
     return df
 
 def extract_category(metadata):
