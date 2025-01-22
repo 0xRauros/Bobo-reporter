@@ -16,9 +16,12 @@
           <p class="lead">Making access to Kobo bookmarks easy and pretty.</p>
           <p>{{ date }}</p>
           <div class="pt-4">
-            {% for book in books %}
-                <h2>{{book}}</h2>
-                <p>{{books[book][bookmarks]}}</p>
+            {% for key, book in books.items() %}
+                <h2>{{book.title}}</h2>
+                {% for bookmark in book.bookmarks %}
+                  <p>{{bookmark}}</p>
+                {% endfor %}
+                <hr>
             {% endfor %}
           </div>
         </div>

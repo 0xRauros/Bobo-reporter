@@ -15,6 +15,7 @@ env = Environment(loader=file_loader)
 
 
 def generate_report_html(query_result, output_file="tmp/report.html", theme="default"):
+
     books = query_result_to_book_list(query_result)
     template = env.get_template(f"{theme}.html")
     output = template.render({"books": books, "date": date.today()})

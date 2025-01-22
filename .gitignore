@@ -17,6 +17,8 @@ env/
 .vscode/
 .idea/
 
+/tmp/
+
 # Ignorar archivos de base de datos SQLite
 *.db
 *.sqlite
