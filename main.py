@@ -4,7 +4,6 @@ from bobo_db import get_official_bookmarks
 from reports import generate_report_pdf, generate_report_html
 from clippings_parser import parse_clippings
 import platform
-from get_windows_filepath import find_kindle_documents_path
 from kindle_reports import kindle_report
 
 # Retrieve the name of the operating system
@@ -40,14 +39,24 @@ def main():
 # Inform the user about the operating system
     print_logo()
 
-    wait_for_device()
+    device = wait_for_device()
 
-    set_up_env()
+    if device == "Kobo":
+        print("Kobo detected! Proceeding with Kobo-specific actions...")
+        set_up_env()
+        #generate_report_pdf(get_official_bookmarks(), "bookmark_reports.pdf")
+        generate_report_html(get_official_bookmarks())
 
-    #generate_report_pdf(get_official_bookmarks(), "bookmark_reports.pdf")
-    generate_report_html(get_official_bookmarks())
+        clear_tmp()
+        # Call Kobo-related function here
 
-    clear_tmp()
+    elif isinstance(device, tuple) and device[0] == "Kindle":
+        _, clippings_path = device
+        print(f"Kindle detected! Clippings path: {clippings_path}")
+        df = parse_clippings(clippings_path)
+        kindle_report(df)
+
+
 
 if __name__ == "__main__":
     main()
