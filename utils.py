@@ -7,4 +7,5 @@ def query_result_to_book_list(query_result):
         if title not in books:
             books[title] = Book(title)
         books[title].add_bookmark(bookmark)
+    
     return books
