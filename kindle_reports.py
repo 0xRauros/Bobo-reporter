@@ -1,6 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 import pandas as pd
+
 import os
 
 def kindle_report(dataframe):
@@ -47,3 +48,4 @@ def kindle_report(dataframe):
         file.write(html_content)
 
     print("Report has been generated: report.html")
+

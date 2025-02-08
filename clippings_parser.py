@@ -1,8 +1,7 @@
 import re
-import pandas as pd
 
-def parse_clippings(file_path):
-    """
+def parse_clippings(file_path):    
+  """
     Parses a Kindle clippings file and returns the data as a pandas DataFrame.
     Args:
         file_path (str): The path to the Kindle clippings file.
@@ -16,6 +15,12 @@ def parse_clippings(file_path):
             - "Page": The page number of the clipping (extracted from metadata).
             - "Position": The position of the clipping (extracted from metadata).
     """
+
+    try:
+        import pandas as pd
+    except:
+        print("[TODO]: Remove pandas.")
+
     with open(file_path, "r", encoding="utf-8") as file:
         content = file.read()
 
@@ -73,4 +78,6 @@ def extract_page(metadata):
 def extract_position(metadata):
     """Extracts the position from the metadata"""
     match = re.search(r"posición ([\d\-]+)", metadata, re.IGNORECASE)
+
     return match.group(1) if match else None
+

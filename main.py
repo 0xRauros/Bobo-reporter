@@ -8,6 +8,10 @@ from kindle_reports import kindle_report
 
 # Retrieve the name of the operating system
 
+from clippings_parser import parse_clippings
+from get_windows_filepath import find_kindle_documents_path
+from kindle_reports import kindle_report
+
 
 def print_logo():
     os_name = platform.system()
@@ -55,6 +59,7 @@ def main():
         print(f"Kindle detected! Clippings path: {clippings_path}")
         df = parse_clippings(clippings_path)
         kindle_report(df)
+
 
 
 
