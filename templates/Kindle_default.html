@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bobo Reporter for Kindle</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid pt-4">
+        <div class="container">
+            <h1 class="display-4">Bobo Reporter for Kindle eReaders</h1>
+            <p class="lead">Making access to Kindle bookmarks easy and pretty.</p>
+            <p><strong>Date:</strong> {{ date }}</p>
+            
+            <div class="pt-4">
+                {% for book, details in books.items() %}
+                    <div class="book-section">
+                        <h2 class="mt-4">{{ book }}</h2>
+                        <p><strong>Author:</strong> {{ details.author }}</p>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Text</th>
+                                    <th>Page</th>
+                                    <th>Position</th>
+                                    <th>Date Added</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for note in details.notes %}
+                                    <tr>
+                                        <td>{{ note.category }}</td>
+                                        <td>{{ note.text }}</td>
+                                        <td>{{ note.page }}</td>
+                                        <td>{{ note.position }}</td>
+                                        <td>{{ note.added_on }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,8 +4,16 @@
 
 ## Features
 
-- **Compatibility**: Works with Kobo.
+- **Compatibility**: Kobo Clara (GNU/Linux systems only) and Kindle (Windows only).
 - **Output formats**: Generate reports in PDF or HTML.
+
+## TODO
+[] A lot of refactor
+[] More compatibility
+[] Kobo unofficial annotations support
+[] Seduce Willy to remove Pandas
+[] Little external dependencies 
+[] Write license
 
 ## Requirements
 
