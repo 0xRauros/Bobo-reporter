@@ -1,6 +1,20 @@
 import re
 
-def parse_clippings(file_path):
+def parse_clippings(file_path):    
+  """
+    Parses a Kindle clippings file and returns the data as a pandas DataFrame.
+    Args:
+        file_path (str): The path to the Kindle clippings file.
+    Returns:
+        pandas.DataFrame: A DataFrame containing the parsed clippings with columns:
+            - "Book Title": The title of the book.
+            - "Metadata": The metadata associated with the clipping.
+            - "Added On": The date and time when the clipping was added.
+            - "Text": The content of the clipping.
+            - "Category": The category of the clipping (extracted from metadata).
+            - "Page": The page number of the clipping (extracted from metadata).
+            - "Position": The position of the clipping (extracted from metadata).
+    """
 
     try:
         import pandas as pd
@@ -64,4 +78,6 @@ def extract_page(metadata):
 def extract_position(metadata):
     """Extracts the position from the metadata"""
     match = re.search(r"posición ([\d\-]+)", metadata, re.IGNORECASE)
+
     return match.group(1) if match else None
+
