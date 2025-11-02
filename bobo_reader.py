@@ -2,7 +2,11 @@ import shutil
 import os
 import time
 import sys
-import win32api
+
+try:
+    import win32api
+except ImportError:
+    win32api = None
 
 OS_USERNAME = os.getlogin()
 KOBO_PATH = f"/run/media/{OS_USERNAME}/KOBOeReader/.kobo/KoboReader.sqlite"
@@ -61,6 +65,8 @@ def clear_tmp():
     os.remove(LOCAL_COPY_PATH)
 
 def find_kindle_documents_path():
+    if win32api is None:
+        return None
     # Retrieve all drive letters
     drives = win32api.GetLogicalDriveStrings()
     drives = drives.split('\000')[:-1]  # Split the string and remove the last empty element

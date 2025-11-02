@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Scanner</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        #status { font-size: 20px; margin-top: 20px; }
+        #scan { font-size: 18px; padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Device Scanner</h1>
+    <p>Click the button and select your Kobo or Kindle drive</p>
+    <button id="scan">Start Scanning</button>
+    <p id="status">Waiting for scan...</p>
+
+    <script>
+        document.getElementById("scan").addEventListener("click", async function() {
+            const statusEl = document.getElementById("status");
+            const animationChars = ['|', '/', '-', '\\'];
+            let animationIndex = 0;
+            let scanning = true;
+
+            // Animation loop
+            const animate = setInterval(() => {
+                if (!scanning) return clearInterval(animate);
+                statusEl.innerText = `Scanning ${animationChars[animationIndex]}`;
+                animationIndex = (animationIndex + 1) % animationChars.length;
+            }, 200);
+
+            try {
+                // Ask user to select a folder (they should pick the root of their Kobo/Kindle device)
+                const handle = await window.showDirectoryPicker();
+
+                // Scan the selected directory for Kobo or Kindle files
+                for await (const entry of handle.values()) {
+                    if (entry.kind === "directory" && entry.name.toLowerCase().includes("kobo")) {
+                        scanning = false;
+                        statusEl.innerText = "✅ Device detected: Kobo 📖";
+                        return;
+                    }
+                    if (entry.kind === "directory" && entry.name.toLowerCase().includes("documents")) {
+                        scanning = false;
+                        statusEl.innerText = `✅ Device detected: Kindle 📚`;
+                        return;
+                    }
+                }
+
+                scanning = false;
+                statusEl.innerText = "❌ No Kobo or Kindle device detected.";
+            } catch (error) {
+                scanning = false;
+                statusEl.innerText = "❌ Permission denied or no device found.";
+                console.error("Error accessing file system:", error);
+            }
+        });
+    </script>
+
+</body>
+</html>
