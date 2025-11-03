@@ -1,16 +1,25 @@
 import os
 
+try:
+    import win32api
+except ImportError:
+    win32api = None
+
 
 def winapi_loader():
-    try:
-        import win32api
-    except:
-        print("[TODO]: Remove platform specific dependencies.")
+    global win32api
+    if win32api is None:
+        try:
+            import win32api
+        except ImportError:
+            raise ImportError("pywin32 is required for Windows Kindle support. Install it with: pip install pywin32")
 
 
 def find_kindle_documents_path():
-
     winapi_loader()
+    
+    if win32api is None:
+        raise ImportError("pywin32 is required for Windows Kindle support")
 
     # Retrieve all drive letters
     drives = win32api.GetLogicalDriveStrings()

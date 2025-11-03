@@ -4,8 +4,38 @@
 
 ## Features
 
-- **Compatibility**: Kobo Clara (GNU/Linux systems only) and Kindle (Windows only).
+- **Compatibility**: Kobo (GNU/Linux systems) and Kindle (Windows).
 - **Output formats**: Generate reports in PDF or HTML.
+- **Web App**: Modern web interface for easy access (NEW!)
+- **Terminal App**: Original command-line interface still available
+
+## Usage
+
+### Web App (Recommended)
+
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Start the web server:
+   ```bash
+   python app.py
+   ```
+
+3. Open your browser and navigate to:
+   ```
+   http://localhost:5000
+   ```
+
+4. Select your device type (Kobo or Kindle), scan for devices, or upload a file manually.
+
+### Terminal App
+
+Run the original terminal application:
+```bash
+python main.py
+```
 
 ## TODO
 [] A lot of refactor
